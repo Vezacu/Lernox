@@ -513,14 +513,15 @@ export const updateParent = async (
   }
   try {
     const clerk = await clerkClient();
-    const users = await clerk.users.updateUser(data.id,{
+    const users = await clerk.users.updateUser(data.id, {
       username: data.username,
       ...(data.password !== "" && { password: data.password }),
       firstName: data.name,
       lastName: data.surname,
     });
 
-    await prisma.parent.update({ where: { id: String(data.id) },
+    await prisma.parent.update({
+      where: { id: String(data.id) },
       data: {
         ...(data.password !== "" && { password: data.password }),
         username: data.username,
@@ -528,15 +529,15 @@ export const updateParent = async (
         name: data.name || "",
         surname: data.surname || "",
         phone: data?.phone || "",
-        address: data?.address || "",  
+        address: data?.address || "",
       },
     });
 
     return { success: true, error: false };
   } catch (err) {
     console.log("Error updating parent:", err);
-    return { success: false, error: true };
-  }
+    return { success: false, error: true };
+  }
 };
 
 export const deleteParent = async (
@@ -560,7 +561,6 @@ export const deleteParent = async (
     return { success: false, error: true };
   }
 };
-
 
 // export const createResult = async (
 //   data: { studentId: string; subjectId: number; marks: number; grade: string }[]
