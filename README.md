@@ -1,7 +1,7 @@
-<<<<<<< HEAD
+
 # Lernox
-=======
-# Lama Dev School Management Dashboard
+
+
 
 ## Getting Started
 
@@ -27,4 +27,4 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Lama Dev Youtube Channel](https://youtube.com/lamadev) 
 - [Next.js](https://nextjs.org/learn)
->>>>>>> 59e7899 (First commit)
+59e7899 (First commit)
