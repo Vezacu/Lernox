@@ -120,3 +120,20 @@ email: z
 });
 
 export type ParentSchema = z.infer<typeof parentSchema>;
+
+
+export const announcementSchema = z.object({
+  id: z.coerce.number().optional(),
+   
+   title: z.string().min(1, { message: "Title is required!" }),
+ 
+   description: z.string().min(1, { message: "Description is required!" }),
+ 
+   startDate: z.coerce.date({ message: "Start Date is required!" }),
+ 
+   endDate: z.coerce.date({ message: "End Date is required!" }),
+ 
+   img: z.string().optional(),
+ });
+ export type AnnouncementSchema = z.infer<typeof announcementSchema>;
+ 

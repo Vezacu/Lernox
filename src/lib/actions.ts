@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import {
+  AnnouncementSchema,
   ClassSchema,
   ExamSchema,
   ParentSchema,
@@ -561,6 +562,78 @@ export const deleteParent = async (
     return { success: false, error: true };
   }
 };
+
+export const createAnnouncement = async (
+  currentState: CurrentState,
+  data: AnnouncementSchema
+) => {
+  try {
+    // Exclude 'id' from the data object when creating a new announcement
+    const { id, ...createData } = data;
+
+    await prisma.announcement.create({
+      data: createData,
+    });
+
+    // revalidatePath("/list/announcements");
+    return { success: true, error: false };
+  } catch (err) {
+    console.log(err);
+    return { success: false, error: true };
+  }
+};
+    export const updateAnnouncement = async (
+      currentState: CurrentState,
+      data: AnnouncementSchema
+    ) => {
+      try {
+        // Ensure the `id` is provided and valid
+        if (!data.id || isNaN(Number(data.id))) {
+          throw new Error("Announcement ID is required for update and must be a valid number.");
+        }
+    
+        // Update the announcement
+        await prisma.announcement.update({
+          where: {
+            id: Number(data.id), // Use the provided `id`
+          },
+          data: {
+            title: data.title,
+            description: data.description,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            img: data.img,
+          },
+        });
+    
+        // Revalidate the path if needed
+        // revalidatePath("/list/announcements");
+        return { success: true, error: false };
+      } catch (err) {
+        console.error("Error updating announcement:", err);
+        return { success: false, error: true };
+      }
+    };
+
+
+export const deleteAnnouncement = async (
+  currentState: CurrentState,
+  data: FormData
+) => {
+  try {
+    const id = data.get("id") as string;
+    await prisma.announcement.delete({
+      where: {
+        id: parseInt(id),
+      },
+    });
+    return { success: true, error: false };
+  } catch (err) {
+    console.log(err);
+    return { success: false, error: true };
+  }
+};
+
 
 // export const createResult = async (
 //   data: { studentId: string; subjectId: number; marks: number; grade: string }[]

@@ -195,8 +195,8 @@ async function main() {
             data: {
                 title: `Announcement ${i}`,
                 description: `Description for Announcement ${i}`,
-                date: new Date(),
-                classId: (i % 5) + 1,
+                startDate: new Date(), 
+                endDate: new Date(new Date().setDate(new Date().getDate() + 1)), 
             },
         });
     }
